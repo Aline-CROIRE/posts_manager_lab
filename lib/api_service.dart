@@ -3,10 +3,10 @@ import 'package:http/http.dart' as http;
 import 'post_model.dart';
 
 class ApiService {
-  // Using the more reliable endpoint
+
   final String baseUrl = "https://jsonplaceholder.org/posts";
 
-  // Fetch all posts with a 10s timeout to prevent infinite loading
+  // Fetch all posts 
   Future<List<Post>> fetchPosts() async {
     try {
       final response = await http.get(Uri.parse(baseUrl)).timeout(const Duration(seconds: 10));
@@ -20,7 +20,7 @@ class ApiService {
     return [];
   }
 
-  // Create post with try-catch to ignore network-related client exceptions
+  // Create post with try-catch 
   Future<void> createPost(String title, String body) async {
     try {
       await http.post(
