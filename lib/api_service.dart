@@ -9,35 +9,35 @@ class ApiService {
     final response = await http.get(
       Uri.parse(baseUrl),
       headers: {
-        "Accept": "application/json",
-        "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-        "Referer": "https://www.google.com/",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "User-Agent": "PostmanRuntime/7.26.8", // This is a common API testing tool
       },
     );
-
-    print("Status Code: ${response.statusCode}");
-
+    
     if (response.statusCode == 200) {
       List<dynamic> body = json.decode(response.body);
       return body.map((dynamic item) => Post.fromJson(item)).toList();
     } else {
-      throw Exception("Failed to load: Status Code ${response.statusCode}");
+      throw Exception("Status Code: ${response.statusCode}");
     }
   }
+
   Future<void> createPost(String title, String body) async {
-  final response = await http.post(
-    Uri.parse(baseUrl),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-      "User-Agent": "Mozilla/5.0",
-    },
-    body: jsonEncode({
-      'title': title,
-      'body': body,
-      'userId': 1,
-    }),
-  );
-  print("Create Response: ${response.statusCode}");
-}
+    await http.post(Uri.parse(baseUrl), 
+      headers: {"Content-type": "application/json; charset=UTF-8", "User-Agent": "Mozilla/5.0"},
+      body: jsonEncode({'title': title, 'body': body, 'userId': 1}),
+    );
+  }
+
+  Future<void> updatePost(int id, String title, String body) async {
+    await http.put(Uri.parse('$baseUrl/$id'),
+      headers: {"Content-type": "application/json; charset=UTF-8", "User-Agent": "Mozilla/5.0"},
+      body: jsonEncode({'id': id, 'title': title, 'body': body, 'userId': 1}),
+    );
+  }
+
+  Future<void> deletePost(int id) async {
+    await http.delete(Uri.parse('$baseUrl/$id'), headers: {"User-Agent": "Mozilla/5.0"});
+  }
 }

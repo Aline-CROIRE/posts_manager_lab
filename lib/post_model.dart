@@ -6,7 +6,6 @@ class Post {
 
   Post({required this.id, required this.userId, required this.title, required this.body});
 
-  // This factory method converts JSON (from the internet) into our Post object
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
       id: json['id'],
