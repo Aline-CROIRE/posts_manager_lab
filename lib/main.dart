@@ -39,6 +39,16 @@ class _PostsScreenState extends State<PostsScreen> {
           return const Center(child: Text("No posts found"));
         },
       ),
+      floatingActionButton: FloatingActionButton(
+  onPressed: () async {
+    await apiService.createPost("Flutter Lab", "This post was created by me!");
+    setState(() {}); // This tells Flutter to redraw the screen
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Post Created Successfully!")),
+    );
+  },
+  child: const Icon(Icons.add),
+),
     );
   }
 }

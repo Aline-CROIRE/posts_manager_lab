@@ -25,4 +25,19 @@ class ApiService {
       throw Exception("Failed to load: Status Code ${response.statusCode}");
     }
   }
+  Future<void> createPost(String title, String body) async {
+  final response = await http.post(
+    Uri.parse(baseUrl),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+      "User-Agent": "Mozilla/5.0",
+    },
+    body: jsonEncode({
+      'title': title,
+      'body': body,
+      'userId': 1,
+    }),
+  );
+  print("Create Response: ${response.statusCode}");
+}
 }
